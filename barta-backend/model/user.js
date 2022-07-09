@@ -4,6 +4,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   emailOrPhone: {
     type: String,
     required: true,
@@ -13,11 +18,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profilePic:{
-    type:String,
-    required:true,
-  }
-  ,
+  profilePic: {
+    type: String,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
