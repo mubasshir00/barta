@@ -13,6 +13,13 @@ const registrationSchema = Joi.object({
   country: Joi.string(),
 });
 
+const loginSchema = Joi.object({
+    emailOrPhone: Joi.string(),
+    userName:Joi.string(),
+    password:Joi.string().required(),
+})
+
 module.exports = {
-    registrationSchema:registrationSchema
+    registrationSchema:registrationSchema,
+    loginSchema:loginSchema
 }
