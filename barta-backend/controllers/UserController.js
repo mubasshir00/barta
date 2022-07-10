@@ -6,6 +6,7 @@ const secret = process.env.secret;
 
 const user = async (req,res) =>{
     try {
+        console.log('Hello');
         console.log(req.body);
         res.send(req.body);
 
@@ -90,7 +91,7 @@ const userLogin = async (req,res)=>{
                },
                "barta",
                {
-                 expiresIn: "1d",
+                 expiresIn: "24h",
                }
              );
              res.status(200).json({
