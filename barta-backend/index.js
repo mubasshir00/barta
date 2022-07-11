@@ -10,7 +10,7 @@ require("dotenv/config");
 const socketServer = require('./socket');
 // const session = require('express-session');
 
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3015;
 const connection_string = process.env.mongodb_connection_string;
 
 const server = http.createServer(app);

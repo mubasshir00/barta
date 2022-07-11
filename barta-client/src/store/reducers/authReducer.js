@@ -1,3 +1,5 @@
+import { authActions } from "../actions/authActions";
+
 const initState = {
     userDetails : null,
 }
@@ -7,6 +9,7 @@ const reducer = (state = initState,action) =>{
         case "DUMMY" :
             return {
                 ...state,
+                userDetails: action.userDetails,
             }
         default:
             return state;
