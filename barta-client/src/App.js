@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './components/dashboard/Dashboard'
 import LoginPage from './components/login/LoginPage';
 import Register from './components/register/RegisterPage'
+import AlertNotification from './shared/AlertNotification';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard/>}/>
       </Routes>
+      <AlertNotification/>
     </>
   );
 }
