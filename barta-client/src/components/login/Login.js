@@ -1,8 +1,11 @@
 import React from 'react'
+import AuthBox from '../../shared/AuthBox'
 
 function Login() {
   return (
-    <div>Login</div>
+    <AuthBox>
+      LoginBox
+    </AuthBox>
   )
 }
 
