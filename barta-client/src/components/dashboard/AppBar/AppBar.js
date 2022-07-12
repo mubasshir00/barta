@@ -1,5 +1,6 @@
 import { styled } from '@mui/material'
 import React from 'react'
+import DropDownMenu from './DropDownMenu'
 
 const MainContainer = styled('div')({
     position:'absolute',
@@ -17,7 +18,9 @@ const MainContainer = styled('div')({
 
 const AppBar = () => {
   return (
-    <MainContainer></MainContainer>
+    <MainContainer>
+      <DropDownMenu/>
+    </MainContainer>
   )
 }
 

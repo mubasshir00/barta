@@ -1,5 +1,9 @@
 import { styled } from '@mui/material'
 import React from 'react'
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { logout } from '../../shared/utils/auth'
+import { getActions } from '../../store/actions/authActions'
 import AppBar from './AppBar/AppBar'
 import FridendsSideBar from './FridendsSideBar/FridendsSideBar'
 import Messenger from './Messenger/Messenger'
@@ -11,7 +15,15 @@ const Wrapper = styled('div')({
   display:'flex'
 })
 
-function Dashboard() {
+function Dashboard({setUserDetails}) {
+  useEffect(()=>{
+    const userDetails = localStorage.getItem('user');
+    if(!userDetails){
+      logout();
+    } else {
+      setUserDetails(JSON.parse(userDetails));
+    }
+  },[])
   return (
     <Wrapper>
       <SideBar/>
@@ -22,4 +34,10 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+const mapActionsToProps = (dispatch) =>{
+  return {
+    ...getActions(dispatch),
+  };
+};
+
+export default connect(null,mapActionsToProps)(Dashboard);
