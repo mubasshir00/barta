@@ -3,6 +3,8 @@ const { registerSchema, loginSchema } = require("../helper/validation");
 const user = require("../models/user");
 const bcrypt = require("bcrypt");
 
+const jwt = require('jsonwebtoken')
+
 const userLogin =async (req,res)=>{
     try {
         const result = await loginSchema.validate(req.body);
@@ -23,12 +25,26 @@ const userLogin =async (req,res)=>{
           user_details &&
           (await bcrypt.compare(password, user_details.password))
         ) {
-          console.log({ user_details });
+
+          //send new token
+
+          const token = jwt.sign(
+            {
+              user_id: user_details._id,
+              email: user_details.email,
+            },
+            process.env.secret,
+            {
+              expiresIn:'24h'
+            }
+          );
+
           return res.status(200).json({
             status: true,
             status_message: "Login Success",
             email: user_details.email,
             username: user_details.username,
+            token:token
           });
         } 
 
@@ -68,13 +84,24 @@ const userRegistration = async (req,res) =>{
           username: username ? username : "no_name",
           profilePic: profilePic ? "" : profilePic,
         });
+        const token = jwt.sign(
+          {
+            user_id: newUser._id,
+            email: newUser.email,
+          },
+          process.env.secret,
+          {
+            expiresIn: "24h",
+          }
+        );
         return res.status(200).json({
           status: true,
           status_message: "registration success",
           email: newUser.email,
           username: newUser.username,
           password:newUser.password,
-          profilePic:newUser.profilePic
+          profilePic:newUser.profilePic,
+          token : token
         });
     } catch(e){
         console.log(e);
