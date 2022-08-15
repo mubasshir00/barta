@@ -9,6 +9,9 @@ const rootReducers = combineReducers({
   auth: authReducer,
 });
 
-const store = createStore(rootReducers,composeWithDevTools(applyMiddleware(thunk)))
+const store = createStore(
+  rootReducers,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;
