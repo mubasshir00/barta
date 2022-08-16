@@ -59,6 +59,7 @@ const userLogin =async (req,res)=>{
 }
 const userRegistration = async (req,res) =>{
     try{
+      console.log(req.body);
         const result = registerSchema.validate(req.body);
         if(result.error){
             return res.status(400).json({
