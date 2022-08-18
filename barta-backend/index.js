@@ -12,8 +12,9 @@ app.use(cors());
 const server = http.createServer(app);
 
 const authRoute = require("./routes/authRoutes");
-
+const web_route = require("./routes/web");
 app.use("/api/auth",authRoute);
+app.use("/api", web_route);
 
 mongoose.connect(process.env.mongodb_connection_string).then(()=>{
     server.listen(PORT,()=>{
