@@ -21,27 +21,38 @@ const PendingInvitationsListItem = ({
   }
   return (
     <Tooltip title={mail}>
-      <div style={{width:'100%'}}>
-        <Box sx={{
-          width:'100%',
-          height:'42px',
-          marginTop:'10px',
-          display:'flex',
-          alignItems:'center',
-          justifyContent:'space-between'
-        }}>
-          <Avatar username={username}/>
-          <Typography sx={{
-            marginLeft:"7px",
-            fontWeight:700,
-            color:"#8e9297",
-            flexGrow:1
-          }} variant="subtitle1">{username}</Typography>
+      <div style={{ width: "100%" }}>
+        <Box
+          sx={{
+            width: "100%",
+            height: "42px",
+            marginTop: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Avatar username={username} />
+          <Typography
+            sx={{
+              marginLeft: "7px",
+              fontWeight: 700,
+              color: "#8e9297",
+              flexGrow: 1,
+            }}
+            variant="subtitle1"
+          >
+            {username}
+          </Typography>
+          <InvitedDecisionButtons
+            disabled={buttonsDisabled}
+            acceptInvitation={handleAcceptInvitation}
+            rejectInvitationHandler={handleRejectInvitation}
+          />
         </Box>
-        <InvitedDecisionButtons disabled={buttonsDisabled} acceptInvitation={handleAcceptInvitation}/>
       </div>
     </Tooltip>
-  )
+  );
 }
 
 export default PendingInvitationsListItem

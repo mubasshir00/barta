@@ -12,11 +12,12 @@ export const getActions = (dispatch) =>{
         login : (userDatils,history) => dispatch(login(userDatils,history)),
         register : (userDatils,history) =>
             dispatch(register(userDatils,history)),
+        setUserDetails: (userDetails) => dispatch(setUserDetails(userDetails))
     }
 }
 
 // set user details e action type get hbe
-const setUserDetails = (userDatils) =>{
+export const setUserDetails = (userDatils) =>{
     return {
         type : authActions.SET_USER_DETAILS,
         userDatils,
