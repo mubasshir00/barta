@@ -41,6 +41,18 @@ export const register = async (data) =>{
     }
 }
 
+export const sendFriendInvitation = async(data) =>{
+    try {
+        return await apiClient.post("/friend-invitation/invite",data);
+    } catch (expection) {
+        checkResponseCode(expection);
+      return {
+        error: true,
+        expection,
+      };
+    }
+}
+
 //secure routes 
 const checkResponseCode = (expection) =>{
     const responseCode = expection?.response?.status;
