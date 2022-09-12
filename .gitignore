@@ -6,6 +6,7 @@
 .pnp.js
 
 /barta-client/node_modules
+/barta_backend/node_modules
 
 # testing
 /coverage
