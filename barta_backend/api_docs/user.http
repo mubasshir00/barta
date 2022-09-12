@@ -1,0 +1,19 @@
+###
+
+POST http://localhost:3015/auth/user/login
+Content-Type: application/json
+{
+    "auth_id" : "102608350418300475969",
+    "auth_type" : "google",
+    "country" : "",
+    "device_id" : "11010f02bcf0a3e36",
+    "device_token" : "fNOXwvVtRPeeJJ-WIhrgoL:APA91bFWeOb8WOjXJ0u2GBYt0jdyyB5ikqY28iEQEl4sE-X6tCnQWLhgEusSyyWFwPRKN52D6lMLMSORk5qx6U0_M_9r1-E1DLFY4QBBt1PqtW2M2AhsoGwYL--8uE9aeCi-61hnFYwp",
+    "device_type" : "android",
+    "email" : "aa@gmail.com",
+    "first_name":"Md Hasan",
+    "last_name":"1",
+    "profile_pic":"",
+    "state":"",
+    "username":"mahmudul1",
+    "deviceId": "4232323787"
+}

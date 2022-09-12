@@ -1,0 +1,34 @@
+{
+    "app" : {
+        "mode":"development",
+        "secret":"mubasshir@2022",
+        "https": 5015,
+        "access_token_secret" : "secrettoken123",
+        "refresh_token_secret": "refreshtoken456",
+        "token_expire_hours" : "6h"
+    },
+    "mysql":{
+        "host" : "http://localhost",
+        "port":3306,
+        "user":"mubasshir",
+        "timeout":10000,
+        "password": "Mubasshir#00",
+        "database" : ""
+    },
+    "mongodb" : {
+        "connection_string" : "mongodb+srv://mubasshir:mubasshir@cluster0.erzwy.mongodb.net/?retryWrites=true&w=majority",
+        "dbname" : "live_streaming_server"
+    },
+    "mongodb_local" : {
+        "host" : "127.0.0.1",
+        "dbname" : "live_streaming_server",
+        "port" : 27017,
+        "debug" : false
+    }
+    ,
+    "redis" : {
+        "connection_string" : "127.0.0.1:6379"
+    },
+    "TIMEZONE": "Asia/Dhaka",
+    "UTC": 6
+}
