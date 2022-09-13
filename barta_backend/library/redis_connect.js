@@ -56,9 +56,9 @@ const getOrSetString = async (key,timeout,cb) =>{
 }
 
 // setString("tesstq", "HELLO");
-getOrSetString("erhujknsc", 1, ()=>{
-    return "LLLL"
-});
+// getOrSetString("erhujknsc", 1, ()=>{
+//     return "LLLL"
+// });
 module.exports = {
   setString: setString,
   getOrSetString: getOrSetString,

@@ -1,23 +1,60 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import AlertNotification from './components/AlertNotification'
-import Dashboard from './pages/Dashboard'
-import Login from './pages/Login'
-import Register from './pages/Register'
+import axios from 'axios';
+import { gapi } from 'gapi-script';
+import React, { useEffect } from 'react'
+import {GoogleLogin} from "react-google-login";
+import { baseURL } from './library/baseURL';
 
-function App() {
+const App = () => {
+  const clientId = "109997036999-cgbq8dnanu9639ub6mdsp9ls9mm875af.apps.googleusercontent.com";
+  useEffect(()=>{
+    const initClient = () =>{
+      gapi.client.init({
+        clientId : clientId,
+        scope:''
+      })
+    }
+    gapi.load("client:auth2", initClient);
+  })
+
+  const onSuccess = async (res) =>{
+    console.log('Login Success',res);
+    const { Ca, accessToken, googleId, profileObj } = { ...res };
+    console.log(Ca);
+    const auth_body = {
+      auth_id: googleId,
+      auth_type: "google",
+      country: "",
+      device_token: accessToken,
+      device_type: "web",
+      email: profileObj.email,
+      first_name: profileObj.givenName,
+      last_name: profileObj.familyName,
+      profile_pic: profileObj.imageUrl,
+      state: "",
+      username: profileObj.givenName + profileObj.familyName,
+      deviceId: googleId,
+    };
+    axios.post(`${baseURL}/auth/login`,{
+     auth_body
+    }).then(res=>{
+      console.log({res});
+    });
+  }
+  const onFailure = (res) =>{
+    console.log('Login Failed',res);
+  }
   return (
-    <>
-      <BrowserRouter>
-       <Routes>
-        <Route path='/' element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
-       </Routes>
-      </BrowserRouter>
-      <AlertNotification/>
-    </>
-  )
+    <div>
+      <GoogleLogin
+        clientId="109997036999-cgbq8dnanu9639ub6mdsp9ls9mm875af.apps.googleusercontent.com"
+        buttonText="Login with google"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={"single_host_origin"}
+        isSignedIn={true}
+      ></GoogleLogin>
+    </div>
+  );
 }
 
 export default App
