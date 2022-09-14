@@ -5,15 +5,16 @@ const app = express();
 let redisClient = redis.createClient({
   url: "redis://127.0.0.1:6379"
 });
+ redisClient.connect();
 
-redisClient.on('ready',()=>console.log('Redis client is ready'));
-redisClient.on('end',()=>console.log('Redis client has closed'));
+// redisClient.on('ready',()=>console.log('Redis client is ready'));
+// redisClient.on('end',()=>console.log('Redis client has closed'));
 
-redisClient.on('reconnecting',(o)=>{
-    console.log(`Redis client is reconnecting.`);
-    console.log(`Attempt number ${o.attempt}.`);
-    console.log(`Milliseconds since last attempt ${o.delay}`);
-})
+// redisClient.on('reconnecting',(o)=>{
+//     console.log(`Redis client is reconnecting.`);
+//     console.log(`Attempt number ${o.attempt}.`);
+//     console.log(`Milliseconds since last attempt ${o.delay}`);
+// })
 
 const setJwtToken = async (key,updatedCachedData)=>{
     try{
@@ -31,7 +32,7 @@ const setString = async (key,updatedCachedData) =>{
         // await redisClient.connect();
         // console.log({redisClient});
         let result = await redisClient.set(key,JSON.stringify(updatedCachedData))
-        console.log(result);
+       // console.log(result);
         // redisClient.disconnect();
     } catch(e){
         console.log(e);
