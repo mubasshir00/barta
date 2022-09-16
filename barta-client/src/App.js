@@ -4,18 +4,26 @@ import React, { useEffect } from 'react'
 import {GoogleLogin} from "react-google-login";
 import { baseURL } from './library/baseURL';
 import FacebookLogin from "react-facebook-login";
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Login from './Auth/Login';
+import Dashboard from './Dashboard/Dashboard';
 
 const App = () =>{
   return (
-    <div>
+    <Router>
       <Switch>
-        <Route path="/" exact component={Login}/>
-        <Route
+        <Route exact path="/">
+          <Login />
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard/>
+        </Route>
+        <Route path="/">
+          <Redirect to="/dashboard" />
+        </Route>
       </Switch>
-    </div>
-  )
+    </Router>
+  );
 }
 
 export default App

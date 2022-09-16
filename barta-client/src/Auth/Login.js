@@ -4,8 +4,14 @@ import React, { useEffect } from 'react'
 import GoogleLogin from 'react-google-login';
 import { baseURL } from '../library/baseURL';
 import FacebookLogin from "react-facebook-login";
+import { getActions } from '../store/actions/authActions';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({login}) => {
+
+    const history = useHistory();
+
     const clientId = "109997036999-cgbq8dnanu9639ub6mdsp9ls9mm875af.apps.googleusercontent.com";
     useEffect(()=>{
       const initClient = () =>{
@@ -19,7 +25,7 @@ const Login = () => {
     const onSuccess = async (res) =>{
       const { Ca, accessToken, googleId, profileObj } = { ...res };
       console.log(Ca);
-      const auth_body = {
+      const userDetails = {
         auth_id: googleId,
         auth_type: "google",
         country: "",
@@ -33,13 +39,14 @@ const Login = () => {
         username: profileObj.givenName + profileObj.familyName,
         deviceId: googleId,
       };
-      axios.post(`${baseURL}/auth/login`,{
-       ...auth_body
-      }).then(res=>{
-        console.log({res});
-      }).catch(e=>{
-        console.log(e);
-      });
+      login(userDetails,history);
+      // axios.post(`${baseURL}/auth/login`,{
+      //  ...auth_body
+      // }).then(res=>{
+      //   console.log({res});
+      // }).catch(e=>{
+      //   console.log(e);
+      // });
     }
     const onFailure = (res) =>{
       console.log('Login Failed',res);
@@ -47,7 +54,7 @@ const Login = () => {
     const responseFacebook =(response) =>{
       console.log(response);
       const { id, accessToken, email, name, picture, userID } = { ...response };
-      const auth_body = {
+      const userDetails = {
         auth_id: id,
         auth_type: "facebook",
         country: "",
@@ -61,16 +68,17 @@ const Login = () => {
         username: userID,
         deviceId: id,
       };
-      axios
-        .post(`${baseURL}/auth/login`, {
-          ...auth_body,
-        })
-        .then(res => {
-          console.log({ res });
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      login(userDetails, history);
+      // axios
+      //   .post(`${baseURL}/auth/login`, {
+      //     ...auth_body,
+      //   })
+      //   .then(res => {
+      //     console.log({ res });
+      //   })
+      //   .catch(e => {
+      //     console.log(e);
+      //   });
     }
     return (
       <div>
@@ -82,13 +90,22 @@ const Login = () => {
           cookiePolicy={"single_host_origin"}
           isSignedIn={true}
         ></GoogleLogin>
-        <FacebookLogin appId="5233432096765060" autoLoad={true}
-        fields="name,email,picture"
-        // onClick={componentClicked}
-        callback={responseFacebook}
+        <FacebookLogin
+          appId="659285952202319"
+          autoLoad={true}
+          fields="name,email,picture"
+          // onClick={componentClicked}
+          callback={responseFacebook}
         />
       </div>
     );
 }
 
-export default Login
+
+const mapActionsToProps = (dispatch) =>{
+  return {
+    ...getActions(dispatch),
+  }
+}
+export default connect(null,mapActionsToProps)(Login);
+// export default Login
