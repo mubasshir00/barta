@@ -10,6 +10,7 @@ export const getActions = (dispatch) =>{
 }
 
 const setUserDetails = (userDetails) =>{
+    console.log({userDetails});
     return {
         type: authActions.SET_USER_DETAILS,
         userDetails,
@@ -25,8 +26,10 @@ const login = (userDetails,history)=>{
         } else {
             const {data} = response;
             localStorage.setItem("user", JSON.stringify(data));
-            dispatch(setUserDetails(data));
+            
             history.push("/dashboard");
+            // window.location.reload(true);
+            dispatch(setUserDetails(localStorage.getItem("user")));
         }
     }
 }

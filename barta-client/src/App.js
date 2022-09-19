@@ -7,20 +7,22 @@ import FacebookLogin from "react-facebook-login";
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Login from './Auth/Login';
 import Dashboard from './Dashboard/Dashboard';
+import { createBrowserHistory } from "history";
 
 const App = () =>{
+
   return (
-    <Router>
+    <Router >
       <Switch>
+        <Route render={true} exact path="/dashboard">
+          <Dashboard />
+        </Route>
+
         <Route exact path="/">
           <Login />
         </Route>
-        <Route exact path="/dashboard">
-          <Dashboard/>
-        </Route>
-        <Route path="/">
-          <Redirect to="/dashboard" />
-        </Route>
+
+        <Redirect to="/dashboard" />
       </Switch>
     </Router>
   );

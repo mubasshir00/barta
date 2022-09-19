@@ -5,6 +5,7 @@ const initState = {
 }
 
 const reducer = (state = initState,action) =>{
+    console.log({action});
     switch(action.type){
         case authActions.SET_USER_DETAILS:
             return {

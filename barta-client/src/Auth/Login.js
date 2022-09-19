@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { gapi } from 'gapi-script';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import GoogleLogin from 'react-google-login';
 import { baseURL } from '../library/baseURL';
 import FacebookLogin from "react-facebook-login";
@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 const Login = ({login}) => {
+
+    const [googleLoginClick,setGoogleLoginClick] = useState(false);
 
     const history = useHistory();
 
@@ -39,15 +41,14 @@ const Login = ({login}) => {
         username: profileObj.givenName + profileObj.familyName,
         deviceId: googleId,
       };
-      login(userDetails,history);
-      // axios.post(`${baseURL}/auth/login`,{
-      //  ...auth_body
-      // }).then(res=>{
-      //   console.log({res});
-      // }).catch(e=>{
-      //   console.log(e);
-      // });
+     await login(userDetails,history);
+        
     }
+
+    const handleClick = ()=>{
+      setGoogleLoginClick(true);
+    };
+
     const onFailure = (res) =>{
       console.log('Login Failed',res);
     }
@@ -68,7 +69,7 @@ const Login = ({login}) => {
         username: userID,
         deviceId: id,
       };
-      login(userDetails, history);
+       login(userDetails, history);
       // axios
       //   .post(`${baseURL}/auth/login`, {
       //     ...auth_body,
@@ -82,14 +83,17 @@ const Login = ({login}) => {
     }
     return (
       <div>
-        <GoogleLogin
-          clientId="109997036999-cgbq8dnanu9639ub6mdsp9ls9mm875af.apps.googleusercontent.com"
-          buttonText="Login with google"
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          cookiePolicy={"single_host_origin"}
-          isSignedIn={true}
-        ></GoogleLogin>
+        
+          <GoogleLogin
+            clientId="109997036999-cgbq8dnanu9639ub6mdsp9ls9mm875af.apps.googleusercontent.com"
+            buttonText="Login with google"
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={"single_host_origin"}
+            // isSignedIn={true}
+          ></GoogleLogin>
+        
+
         <FacebookLogin
           appId="659285952202319"
           autoLoad={true}
