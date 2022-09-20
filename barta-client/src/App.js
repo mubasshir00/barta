@@ -12,7 +12,7 @@ import { createBrowserHistory } from "history";
 const App = () =>{
 
   return (
-    <Router >
+    <Router>
       <Switch>
         <Route render={true} exact path="/dashboard">
           <Dashboard />

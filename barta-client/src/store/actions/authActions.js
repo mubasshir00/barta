@@ -28,7 +28,7 @@ const login = (userDetails,history)=>{
             localStorage.setItem("user", JSON.stringify(data));
             
             history.push("/dashboard");
-            // window.location.reload(true);
+            window.location.reload(true);
             dispatch(setUserDetails(localStorage.getItem("user")));
         }
     }

@@ -7,7 +7,7 @@ import FacebookLogin from "react-facebook-login";
 import { getActions } from '../store/actions/authActions';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import './Login.css';
 const Login = ({login}) => {
 
     const [googleLoginClick,setGoogleLoginClick] = useState(false);
@@ -82,8 +82,11 @@ const Login = ({login}) => {
       //   });
     }
     return (
-      <div>
-        
+      <div className="login_container">
+        <div style={{marginBottom:'10px'}}>
+          Login With Google / Facebook
+        </div>
+        <div>
           <GoogleLogin
             clientId="109997036999-cgbq8dnanu9639ub6mdsp9ls9mm875af.apps.googleusercontent.com"
             buttonText="Login with google"
@@ -92,15 +95,15 @@ const Login = ({login}) => {
             cookiePolicy={"single_host_origin"}
             // isSignedIn={true}
           ></GoogleLogin>
-        
 
-        <FacebookLogin
-          appId="659285952202319"
-          autoLoad={true}
-          fields="name,email,picture"
-          // onClick={componentClicked}
-          callback={responseFacebook}
-        />
+          <FacebookLogin
+            appId="659285952202319"
+            autoLoad={true}
+            fields="name,email,picture"
+            // onClick={componentClicked}
+            callback={responseFacebook}
+          />
+        </div>
       </div>
     );
 }
