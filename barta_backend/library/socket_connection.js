@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 
 const http = require('http');
+const { newConnectionHandler } = require('../socketServices/newConnectionService');
+const authSocket = require('../middleware/authSocket');
+const jwt = require("jsonwebtoken");
 
 const port = 4444;
 
@@ -20,14 +23,26 @@ app.get('/',function(req,res){
 
 const io = socket(con,{
     cors:{
-        origin:"*"
+        origin:"*",
+        methods : ["GET","POST"],
     }
 });
+
+io.use((socket ,next)=>{
+    try {
+        const token = socket.handshake.headers?.auth;
+    const decoded = jwt.verify(token, "mubasshir");
+    // console.log({decoded});
+    socket.user = decoded;
+    } catch(e){
+        const socketError = new Error("NOT_AUTHORIZED");
+        return next(socketError);
+    }
+    next();
+})
 
 io.on('connection',(socket)=>{
     console.log('New connection : ',socket.id);
     // console.log({socket});
-    socket.on("join_a_room",(data)=>{
-       const { userid,room } = data;
-    })
+    newConnectionHandler(socket,io);
 })
