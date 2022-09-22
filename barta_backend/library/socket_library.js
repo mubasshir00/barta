@@ -5,6 +5,19 @@ const addNewConnectedUser = ({ socketid, userid }) => {
   console.log(connectedUsers);
 };
 
-module.exports = {
-    addNewConnectedUser:addNewConnectedUser
+const getOnlineUsers = () =>{
+  const onlineUsers = [];
+  connectedUsers.forEach((value,key)=>{
+   onlineUsers.push({
+    socketid:key,
+    userid:value.userid
+   })
+  });
+  return onlineUsers
 }
+
+
+module.exports = {
+  addNewConnectedUser: addNewConnectedUser,
+  getOnlineUsers: getOnlineUsers,
+};

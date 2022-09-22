@@ -5,7 +5,9 @@ const app = express();
 const http = require('http');
 const { newConnectionHandler } = require('../socketServices/newConnectionService');
 const authSocket = require('../middleware/authSocket');
+const server_library = require('./../library/socket_library');
 const jwt = require("jsonwebtoken");
+const { directMessageHandler } = require('../socketServices/directMessageHandler');
 
 const port = 4444;
 
@@ -41,8 +43,26 @@ io.use((socket ,next)=>{
     next();
 })
 
+//all connection user under online-users event get message when new user is online
+const emitOnLineUsers = () =>{
+    const onlineUsers = server_library.getOnlineUsers();
+    io.emit("online-users",{onlineUsers})
+    
+}
+
 io.on('connection',(socket)=>{
     console.log('New connection : ',socket.id);
     // console.log({socket});
     newConnectionHandler(socket,io);
+
+    //emit online user
+    emitOnLineUsers();
+
+    // direct message 
+
+    socket.on('on_message',(data)=>{
+        console.log({data});
+        directMessageHandler(socket,data)
+    })
+    
 })

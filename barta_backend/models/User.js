@@ -1,7 +1,7 @@
 const mongoose = require('../config/mongo');
 
 const User_Model = mongoose.model(
-  "users",
+  "User",
   mongoose.Schema(
     {
       username: {
