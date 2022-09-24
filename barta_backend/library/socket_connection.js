@@ -8,6 +8,8 @@ const authSocket = require('../middleware/authSocket');
 const server_library = require('./../library/socket_library');
 const jwt = require("jsonwebtoken");
 const { directMessageHandler } = require('../socketServices/directMessageHandler');
+const { get_user_details } = require('./ReusableQuery');
+const { ChatHistoryHandler } = require('../socketServices/chatHistoryService');
 
 const port = 4444;
 
@@ -30,12 +32,15 @@ const io = socket(con,{
     }
 });
 
-io.use((socket ,next)=>{
+io.use(async (socket ,next)=>{
     try {
-        const token = socket.handshake.headers?.auth;
+    const token = socket.handshake.headers?.auth;
     const decoded = jwt.verify(token, "mubasshir");
-    // console.log({decoded});
+    const user_info = await get_user_details({ userid: decoded.userid });
+    decoded.user_id_db = user_info._id;
     socket.user = decoded;
+
+    // console.log({user_info});
     } catch(e){
         const socketError = new Error("NOT_AUTHORIZED");
         return next(socketError);
@@ -58,11 +63,16 @@ io.on('connection', (socket)=>{
     //emit online user
     emitOnLineUsers();
 
-    // direct message 
-
+    // direct message one to one
     socket.on('on_message',async (data)=>{
         console.log({data});
         await directMessageHandler(socket,data)
     })
+
+    // chat history
+    socket.on("direct-chat-history",(data)=>{
+        ChatHistoryHandler(socket,data);
+    })
+
     
 })

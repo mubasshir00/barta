@@ -8,9 +8,9 @@ const messageSchema = new Schema({
   content: {
     type: String,
   },
-  receiver_id: {
-    type:String
-  },
+  // receiver_id: {
+  //   type:String
+  // },
   date: {
     type: Date,
     default:Date.now(),
