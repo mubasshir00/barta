@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../config/mongo')
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
@@ -18,6 +18,10 @@ const messageSchema = new Schema({
   type: {
     type: String,
   },
+  author:{
+    type:Schema.Types.ObjectId,
+    ref:"User"
+  }
 });
 
 module.exports = mongoose.model("Message",messageSchema)

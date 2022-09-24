@@ -50,7 +50,7 @@ const emitOnLineUsers = () =>{
     
 }
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket)=>{
     console.log('New connection : ',socket.id);
     // console.log({socket});
     newConnectionHandler(socket,io);
@@ -60,9 +60,9 @@ io.on('connection',(socket)=>{
 
     // direct message 
 
-    socket.on('on_message',(data)=>{
+    socket.on('on_message',async (data)=>{
         console.log({data});
-        directMessageHandler(socket,data)
+        await directMessageHandler(socket,data)
     })
     
 })

@@ -1,3 +1,4 @@
+const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
 
 const directMessageHandler = async (socket,data) =>{
@@ -7,7 +8,7 @@ const directMessageHandler = async (socket,data) =>{
 
         const receiver_msg = JSON.parse(data)
 
-        const { receiver_id, content } = { receiver_msg };
+        const { receiver_id, content } = { ...receiver_msg };
 
         console.log({user_info});
         console.log({ receiver_msg });
@@ -19,7 +20,15 @@ const directMessageHandler = async (socket,data) =>{
             receiver_id:receiver_id,
             type:'direct'
         })
-        console.log({message});
+
+        //check conversation is exists for two user
+        const conversation = await Conversation.findOne({
+          participants: { $all: [user_info.userid, receiver_id] },
+        });
+        if(conversation){
+            conversation.messages.push(message._id);
+            await conversation.save();
+        }
     } catch(e){
         console.log({e});
     }

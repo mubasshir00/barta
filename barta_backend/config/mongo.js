@@ -7,7 +7,8 @@ const options = {
   family: 4,
 };
 
-const uri = "mongodb://localhost:27017/live_streaming_server"
+const uri =
+  "mongodb+srv://mubasshir:mubasshir@cluster0.fctkf.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(uri,options);
 
