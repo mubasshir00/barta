@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const { directMessageHandler } = require('../socketServices/directMessageHandler');
 const { get_user_details } = require('./ReusableQuery');
 const { ChatHistoryHandler } = require('../socketServices/chatHistoryService');
+const { setSocketServerInstance } = require('./../library/socket_library');
 
 const port = 4444;
 
@@ -31,6 +32,8 @@ const io = socket(con,{
         methods : ["GET","POST"],
     }
 });
+
+setSocketServerInstance(io);
 
 io.use(async (socket ,next)=>{
     try {
@@ -64,12 +67,20 @@ io.on('connection', (socket)=>{
     emitOnLineUsers();
 
     // direct message one to one
+
+//     {
+//     "receiver_id" : "4J3VE39AM",
+//     "content" : "AAA"
+// }
     socket.on('on_message',async (data)=>{
         console.log({data});
         await directMessageHandler(socket,data)
     })
 
     // chat history
+    // {
+    //     receiver_user_id : "N5HSKFAB8";
+    // }
     socket.on("direct-chat-history",(data)=>{
         ChatHistoryHandler(socket,data);
     })

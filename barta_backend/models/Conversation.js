@@ -13,6 +13,11 @@ const conversationSchema = new Schema({
             type:Schema.Types.ObjectId,
             ref:"Message",
         }
+    ],
+    participants_user_ids:[
+        {
+          
+        }
     ]
 });
 

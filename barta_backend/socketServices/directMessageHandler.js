@@ -38,6 +38,7 @@ const directMessageHandler = async (socket,data) =>{
           const new_conversation = await Conversation.create({
             messages: [message._id],
             participants: [user_info.user_id_db, receiver_id_db],
+            participants_user_ids:[user_info.userid,receiver_id],
           });
           // perform and update to sender and receiver if is online 
           //need to update later
