@@ -38,7 +38,15 @@ const updateChatHistory = async (conversationId , toSpecifiedSocketId = null) =>
             );
             console.log({activeConnection});
             console.log({ conversation });
-        })
+            activeConnection.map((i)=>{
+               io.to(i).emit("direct-chat-history",{
+                messages:conversation.messages,
+                participants:conversation.participants
+               });
+            })
+        });
+
+        
     }
 }
 
