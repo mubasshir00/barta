@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const { directMessageHandler } = require('../socketServices/directMessageHandler');
 const { get_user_details } = require('./ReusableQuery');
 const { ChatHistoryHandler } = require('../socketServices/chatHistoryService');
-const { setSocketServerInstance } = require('./../library/socket_library');
+const { setSocketServerInstance, roomCreateHandler } = require('./../library/socket_library');
 
 const port = 4444;
 
@@ -84,6 +84,9 @@ io.on('connection', (socket)=>{
     socket.on("direct-chat-history",(data)=>{
         ChatHistoryHandler(socket,data);
     })
-
     
+    //create new active room
+    socket.on("room-create",()=>{
+        roomCreateHandler(socket)
+    })
 })

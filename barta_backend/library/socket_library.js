@@ -1,6 +1,7 @@
 const connectedUsers = new Map();
-
+const {v4:uuidv4} = require('uuid');
 let io = null;
+let activeRooms = [];
 
 const setSocketServerInstance = (ioInstance) =>{
   io = ioInstance;
@@ -40,10 +41,51 @@ const getActiveConnections = (user_id)=>{
   return activeConnection;
 }
 
+const addNewActiveRoom = (socket_id,user_id) =>{
+  try {
+    //console.log({socket_id,user_id});
+    const newActiveRoom = {
+      roomCreator :{
+        user_id,
+        socket_id
+      },
+      participants:[
+        {
+          user_id,
+          socket_id
+        },
+      ],
+      room_id: uuidv4()
+    }
+    //console.log({newActiveRoom});
+    activeRooms = [...activeRooms,newActiveRoom];
+    console.log({activeRooms});
+
+    return newActiveRoom;
+  } catch(e){
+    console.log({e});
+  }
+}
+
+const roomCreateHandler = (socket) =>{
+  try {
+    const socket_id = socket.id;
+    const user_id = socket.user.userid;
+    const roomDetails = addNewActiveRoom(socket_id, user_id);
+    socket.emit("room-create",{
+      roomDetails
+    })
+  } catch(e){
+    console.log({e});
+  }
+}
+
 module.exports = {
   addNewConnectedUser: addNewConnectedUser,
   getOnlineUsers: getOnlineUsers,
   setSocketServerInstance,
   getSocketServerInstance,
   getActiveConnections: getActiveConnections,
+  roomCreateHandler: roomCreateHandler,
+  addNewActiveRoom: addNewActiveRoom,
 };
