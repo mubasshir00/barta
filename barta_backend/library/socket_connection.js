@@ -11,6 +11,7 @@ const { directMessageHandler } = require('../socketServices/directMessageHandler
 const { get_user_details } = require('./ReusableQuery');
 const { ChatHistoryHandler } = require('../socketServices/chatHistoryService');
 const { setSocketServerInstance, roomCreateHandler } = require('./../library/socket_library');
+const { roomJoinHandler } = require('../services/RoomJoinHandler');
 
 const port = 4444;
 
@@ -88,5 +89,12 @@ io.on('connection', (socket)=>{
     //create new active room
     socket.on("room-create",()=>{
         roomCreateHandler(socket)
+    })
+
+//     {
+//     "roomId" : "ebb61d46-59d2-4841-ad86-8c13375a6ab7"
+// }
+    socket.on('room-join',(data)=>{
+        roomJoinHandler(socket,data);
     })
 })

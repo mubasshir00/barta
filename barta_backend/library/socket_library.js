@@ -67,6 +67,23 @@ const addNewActiveRoom = (socket_id,user_id) =>{
   }
 }
 
+const getActiveRooms = roomId => {
+  try {
+    // console.log({ activeRooms });
+    const activeRoom = activeRooms.find(active => active.room_id === roomId);
+
+    if(activeRoom){
+      return {
+        ...activeRoom,
+      };
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log({ e });
+  }
+};
+
 const roomCreateHandler = (socket) =>{
   try {
     const socket_id = socket.id;
@@ -80,6 +97,22 @@ const roomCreateHandler = (socket) =>{
   }
 }
 
+const joinActiveRoom = (roomId,new_participant_details) => {
+  try {
+    const room = activeRooms.find(room => room.room_id === roomId);
+    activeRooms = activeRooms.filter((room)=> room.room_id !== roomId);
+
+    const updateRoom = {
+      ...room,
+      participants: [...room.participants, new_participant_details],
+    };
+    activeRooms.push(updateRoom);
+    // console.log({activeRooms});
+  } catch (e) {
+    console.log({ e });
+  }
+};
+
 module.exports = {
   addNewConnectedUser: addNewConnectedUser,
   getOnlineUsers: getOnlineUsers,
@@ -88,4 +121,6 @@ module.exports = {
   getActiveConnections: getActiveConnections,
   roomCreateHandler: roomCreateHandler,
   addNewActiveRoom: addNewActiveRoom,
+  getActiveRooms: getActiveRooms,
+  joinActiveRoom: joinActiveRoom,
 };
