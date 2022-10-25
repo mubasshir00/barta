@@ -67,7 +67,11 @@ const addNewActiveRoom = (socket_id,user_id) =>{
   }
 }
 
-const getActiveRooms = roomId => {
+const getActiveRooms = () =>{
+  return [...activeRooms];
+}
+
+const checkActiveRoom = roomId => {
   try {
     // console.log({ activeRooms });
     const activeRoom = activeRooms.find(active => active.room_id === roomId);
@@ -121,6 +125,7 @@ module.exports = {
   getActiveConnections: getActiveConnections,
   roomCreateHandler: roomCreateHandler,
   addNewActiveRoom: addNewActiveRoom,
-  getActiveRooms: getActiveRooms,
+  checkActiveRoom: checkActiveRoom,
   joinActiveRoom: joinActiveRoom,
+  getActiveRooms: getActiveRooms,
 };

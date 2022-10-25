@@ -10,7 +10,7 @@ const roomJoinHandler = (socket,data) =>{
         user_id: socket.user.userid,
         socket_id: socket.id,
       };
-      const roomDetails = socket_library.getActiveRooms(roomId);
+      const roomDetails = socket_library.checkActiveRoom(roomId);
      socket_library.joinActiveRoom(roomId,participant_details);
      //sending information to connected user about new connection
      roomDetails.participants.forEach((participant)=>{

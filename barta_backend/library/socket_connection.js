@@ -60,41 +60,41 @@ const emitOnLineUsers = () =>{
 }
 
 io.on('connection', (socket)=>{
-    console.log('New connection : ',socket.id);
-    // console.log({socket});
-    newConnectionHandler(socket,io);
+  console.log("New connection : ", socket.id);
+  // console.log({socket});
+  newConnectionHandler(socket, io);
 
-    //emit online user
-    emitOnLineUsers();
+  //emit online user
+  emitOnLineUsers();
 
-    // direct message one to one
+  // direct message one to one
 
-//     {
-//     "receiver_id" : "4J3VE39AM",
-//     "content" : "AAA"
-// }
-    socket.on('on_message',async (data)=>{
-        console.log({data});
-        await directMessageHandler(socket,data)
-    })
+  //     {
+  //     "receiver_id" : "4J3VE39AM",
+  //     "content" : "AAA"
+  // }
+  socket.on("on_message", async data => {
+    console.log({ data });
+    await directMessageHandler(socket, data);
+  });
 
-    // chat history
-    // {
-    //     receiver_user_id : "N5HSKFAB8";
-    // }
-    socket.on("direct-chat-history",(data)=>{
-        ChatHistoryHandler(socket,data);
-    })
-    
-    //create new active room
-    socket.on("room-create",()=>{
-        roomCreateHandler(socket)
-    })
+  // chat history
+  // {
+  //     receiver_user_id : "N5HSKFAB8";
+  // }
+  socket.on("direct-chat-history", data => {
+    ChatHistoryHandler(socket, data);
+  });
 
-//     {
-//     "roomId" : "ebb61d46-59d2-4841-ad86-8c13375a6ab7"
-// }
-    socket.on('room-join',(data)=>{
-        roomJoinHandler(socket,data);
-    })
+  //create new active room
+  socket.on("room-create", () => {
+    roomCreateHandler(socket);
+  });
+
+  //     {
+  //     "roomId" : "f5fddbf7-baac-41d0-9149-2a507358984e"
+  // }
+  socket.on("room-join", data => {
+    roomJoinHandler(socket, data);
+  });
 })
