@@ -9,6 +9,10 @@ const updateRooms = (toSpecificSocketId = null) =>{
         io.to(toSpecificSocketId).emit("active-rooms", {
           active_rooms,
         });
+      } else {
+        io.emit("active-rooms",{
+            active_rooms
+        })
       }
     } catch(e){
         console.log({e});

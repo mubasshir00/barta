@@ -12,6 +12,7 @@ const { get_user_details } = require('./ReusableQuery');
 const { ChatHistoryHandler } = require('../socketServices/chatHistoryService');
 const { setSocketServerInstance, roomCreateHandler } = require('./../library/socket_library');
 const { roomJoinHandler } = require('../services/RoomJoinHandler');
+const { roomLeaveHandler } = require('../services/RoomLeaveHandler');
 
 const port = 4444;
 
@@ -74,7 +75,6 @@ io.on('connection', (socket)=>{
   //     "content" : "AAA"
   // }
   socket.on("on_message", async data => {
-    console.log({ data });
     await directMessageHandler(socket, data);
   });
 
@@ -96,5 +96,14 @@ io.on('connection', (socket)=>{
   // }
   socket.on("room-join", data => {
     roomJoinHandler(socket, data);
+  });
+
+  //     {
+  //     "roomId" : "f5fddbf7-baac-41d0-9149-2a507358984e"
+  // }
+
+  //leave room from socket
+  socket.on("room-leave", data => {
+    roomLeaveHandler(socket, data);
   });
 })

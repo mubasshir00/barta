@@ -13,8 +13,8 @@ const directMessageHandler = async (socket,data) =>{
 
         const receiver_id_db = await get_user_details({ userid: receiver_id });
 
-        console.log({user_info});
-        console.log({ receiver_msg });
+        // console.log({user_info});
+        // console.log({ receiver_msg });
         
        // create new message 
         const message = await Message.create({
