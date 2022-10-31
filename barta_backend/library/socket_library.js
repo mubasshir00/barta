@@ -117,6 +117,16 @@ const joinActiveRoom = (roomId,new_participant_details) => {
   }
 };
 
+const leaveActionRoom =  (roomId,socketId) =>{
+  try {
+    console.log({ activeRooms });
+    const activeRoom = activeRooms.find(room => room.room_id === roomId);
+    console.log({activeRoom});
+  } catch(e){
+    console.log({e});
+  }
+}
+
 module.exports = {
   addNewConnectedUser: addNewConnectedUser,
   getOnlineUsers: getOnlineUsers,
@@ -128,4 +138,5 @@ module.exports = {
   checkActiveRoom: checkActiveRoom,
   joinActiveRoom: joinActiveRoom,
   getActiveRooms: getActiveRooms,
+  leaveActionRoom: leaveActionRoom,
 };
