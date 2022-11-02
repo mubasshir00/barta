@@ -117,11 +117,24 @@ const joinActiveRoom = (roomId,new_participant_details) => {
   }
 };
 
-const leaveActionRoom =  (roomId,socketId) =>{
+const leaveActionRoom =  (roomId,participantId) =>{
   try {
-    console.log({ activeRooms });
+    console.log({ participantId });
     const activeRoom = activeRooms.find(room => room.room_id === roomId);
-    console.log({activeRoom});
+    if(activeRoom){
+      const copyOfActiveRoom = {...activeRoom};
+      console.log({copyOfActiveRoom});
+      copyOfActiveRoom.participants.map(i => {
+        console.log(i.socket_id);
+      });
+      copyOfActiveRoom.participants = copyOfActiveRoom.participants.filter(
+        participant => {
+          participant.socket_id != participantId;
+        }
+      );
+      console.log({ copyOfActiveRoom });
+      
+    }
   } catch(e){
     console.log({e});
   }
